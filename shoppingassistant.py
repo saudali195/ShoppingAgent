@@ -5,11 +5,12 @@ import chainlit as cl
 from dotenv import load_dotenv
 from agents import Agent, Runner, OpenAIChatCompletionsModel, AsyncOpenAI
 
-# Load API key from .env
-load_dotenv()
+# Load API key (works locally with .env and on Railway with system env)
+load_dotenv(override=True)  # locally .env kaam karega, Railway pe ignore hoga
 gemini_key = os.getenv("GEMINI_API_KEY")
+
 if not gemini_key:
-    raise ValueError("GEMINI_API_KEY missing in .env")
+    raise ValueError("❌ GEMINI_API_KEY not found! Please set it in Railway Variables.")
 
 # Initialize Gemini model with OpenAI-compatible client
 external = AsyncOpenAI(
